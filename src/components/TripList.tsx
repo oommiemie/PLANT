@@ -27,10 +27,22 @@ export default function TripList({ trips, onSelectTrip, onEditTrip, onDeleteTrip
 
   if (trips.length === 0) {
     return (
-      <div className="text-center py-16">
-        <div className="text-6xl mb-4">🗺️</div>
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">ยังไม่มีทริปท่องเที่ยว</h3>
-        <p className="text-gray-600 mb-6">เริ่มต้นวางแผนการเดินทางของคุณกันเถอะ!</p>
+      <div className="card text-center py-20 sm:py-32">
+        <div className="mb-8 relative inline-block">
+          <div className="text-8xl sm:text-9xl mb-4 animate-float">🗺️</div>
+          <div className="absolute -inset-4 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full blur-2xl opacity-20 animate-pulse"></div>
+        </div>
+        <h3 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent mb-3">
+          ยังไม่มีทริปท่องเที่ยว
+        </h3>
+        <p className="text-base sm:text-lg text-gray-600 font-medium mb-8 max-w-md mx-auto">
+          เริ่มต้นวางแผนการเดินทางสุดพิเศษของคุณกันเถอะ! ✨
+        </p>
+        <div className="flex gap-2 justify-center text-4xl sm:text-5xl opacity-40">
+          <span className="animate-bounce" style={{ animationDelay: '0s' }}>✈️</span>
+          <span className="animate-bounce" style={{ animationDelay: '0.1s' }}>🌍</span>
+          <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>🏖️</span>
+        </div>
       </div>
     )
   }
