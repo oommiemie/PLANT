@@ -19,7 +19,30 @@ export default function TripForm({ trip, onSave, onCancel }: TripFormProps) {
     currency: trip?.currency || 'THB',
     notes: trip?.notes || '',
     status: trip?.status || 'planning' as Trip['status'],
+    coverImage: trip?.coverImage || '',
   })
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    // Check file size (max 2MB)
+    if (file.size > 2 * 1024 * 1024) {
+      alert('ไฟล์ใหญ่เกินไป (สูงสุด 2MB)')
+      return
+    }
+
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      const base64 = event.target?.result as string
+      setFormData({ ...formData, coverImage: base64 })
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const clearImage = () => {
+    setFormData({ ...formData, coverImage: '' })
+  }
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -182,6 +205,51 @@ export default function TripForm({ trip, onSave, onCancel }: TripFormProps) {
                 rows={4}
                 placeholder="บันทึกข้อมูลเพิ่มเติมเกี่ยวกับทริปนี้..."
               />
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                🖼️ รูปปกทริป
+              </label>
+
+              {formData.coverImage ? (
+                <div className="space-y-2">
+                  <img
+                    src={formData.coverImage}
+                    alt="Cover preview"
+                    className="w-full h-48 object-cover rounded-lg"
+                  />
+                  <button
+                    type="button"
+                    onClick={clearImage}
+                    className="btn-secondary w-full"
+                  >
+                    🗑️ ลบรูป
+                  </button>
+                </div>
+              ) : (
+                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="hidden"
+                    id="cover-image"
+                  />
+                  <label
+                    htmlFor="cover-image"
+                    className="cursor-pointer flex flex-col items-center space-y-2"
+                  >
+                    <div className="text-4xl">📷</div>
+                    <div className="text-sm text-gray-600">
+                      คลิกเพื่ออัพโหลดรูปภาพ
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      รองรับ JPG, PNG (สูงสุด 2MB)
+                    </div>
+                  </label>
+                </div>
+              )}
             </div>
           </div>
 

@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { useLocalStorage } from './hooks/useLocalStorage'
-import type { Trip, DayPlan, Expense, Document, PackingItem } from './types'
+import type { Trip, DayPlan, Expense, Document, PackingItem, AppState } from './types'
 import TripList from './components/TripList'
 import TripDetail from './components/TripDetail'
 import TripForm from './components/TripForm'
+import Settings from './components/Settings'
 
 function App() {
   const [trips, setTrips] = useLocalStorage<Trip[]>('travel_planner_trips', [])
@@ -15,6 +16,7 @@ function App() {
   const [currentTripId, setCurrentTripId] = useState<string | null>(null)
   const [showTripForm, setShowTripForm] = useState(false)
   const [editingTrip, setEditingTrip] = useState<Trip | null>(null)
+  const [showSettings, setShowSettings] = useState(false)
 
   const currentTrip = trips.find(t => t.id === currentTripId)
 
@@ -47,6 +49,15 @@ function App() {
     setShowTripForm(true)
   }
 
+  const handleImport = (data: AppState) => {
+    setTrips(data.trips)
+    setDayPlans(data.dayPlans)
+    setExpenses(data.expenses)
+    setDocuments(data.documents)
+    setPackingItems(data.packingItems)
+    setCurrentTripId(null)
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       <header className="bg-white shadow-sm border-b border-gray-200">
@@ -60,18 +71,31 @@ function App() {
               </div>
             </div>
 
-            {!showTripForm && !currentTrip && (
-              <button
-                onClick={() => {
-                  setEditingTrip(null)
-                  setShowTripForm(true)
-                }}
-                className="btn-primary flex items-center space-x-2"
-              >
-                <span>➕</span>
-                <span>สร้างทริปใหม่</span>
-              </button>
-            )}
+            <div className="flex items-center gap-3">
+              {!showTripForm && !currentTrip && (
+                <button
+                  onClick={() => {
+                    setEditingTrip(null)
+                    setShowTripForm(true)
+                  }}
+                  className="btn-primary flex items-center space-x-2"
+                >
+                  <span>➕</span>
+                  <span>สร้างทริปใหม่</span>
+                </button>
+              )}
+
+              {!showTripForm && !currentTrip && (
+                <button
+                  onClick={() => setShowSettings(true)}
+                  className="btn-secondary flex items-center space-x-2"
+                  title="ตั้งค่า"
+                >
+                  <span>⚙️</span>
+                  <span className="hidden sm:inline">ตั้งค่า</span>
+                </button>
+              )}
+            </div>
 
             {currentTrip && (
               <button
@@ -119,6 +143,14 @@ function App() {
           />
         )}
       </main>
+
+      {showSettings && (
+        <Settings
+          appState={{ trips, dayPlans, expenses, documents, packingItems, currentTripId }}
+          onImport={handleImport}
+          onClose={() => setShowSettings(false)}
+        />
+      )}
     </div>
   )
 }

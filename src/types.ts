@@ -9,6 +9,7 @@ export interface Trip {
   currency: string
   notes?: string
   coverImage?: string
+  images?: string[]
   status: 'planning' | 'booked' | 'ongoing' | 'completed'
   createdAt: string
   updatedAt: string
