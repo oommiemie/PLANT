@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { Trip, DayPlan, Activity } from '../types'
 import { getDatesBetween, formatDateShort, generateId } from '../utils/helpers'
 
@@ -9,10 +9,10 @@ interface ItineraryPlannerProps {
 }
 
 export default function ItineraryPlanner({ trip, dayPlans, onUpdateDayPlans }: ItineraryPlannerProps) {
+  const dates = getDatesBetween(trip.startDate, trip.endDate)
+
   const [expandedDay, setExpandedDay] = useState<string | null>(null)
   const [editingActivity, setEditingActivity] = useState<{ dayPlanId: string; activity: Activity | null } | null>(null)
-
-  const dates = getDatesBetween(trip.startDate, trip.endDate)
 
   const getDayPlan = (date: string, dayNumber: number): DayPlan => {
     const existing = dayPlans.find(dp => dp.date === date)
@@ -78,6 +78,14 @@ export default function ItineraryPlanner({ trip, dayPlans, onUpdateDayPlans }: I
 
     onUpdateDayPlans(dayPlans.map(dp => dp.id === dayPlanId ? updatedDayPlan : dp))
   }
+
+  // Auto-expand first day on mount
+  useEffect(() => {
+    if (dates.length > 0 && !expandedDay) {
+      const firstDayPlan = getDayPlan(dates[0], 1)
+      setExpandedDay(firstDayPlan.id)
+    }
+  }, [dates.length])
 
   return (
     <div className="space-y-4">
