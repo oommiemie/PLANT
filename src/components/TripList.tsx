@@ -37,80 +37,81 @@ export default function TripList({ trips, onSelectTrip, onEditTrip, onDeleteTrip
 
   return (
     <div>
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">ทริปท่องเที่ยวของคุณ</h2>
-        <p className="text-gray-600 mt-1">มีทั้งหมด {trips.length} ทริป</p>
+      <div className="mb-4 sm:mb-6">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900">ทริปท่องเที่ยวของคุณ</h2>
+        <p className="text-sm sm:text-base text-gray-600 mt-1">มีทั้งหมด {trips.length} ทริป</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
         {trips.map(trip => {
           const days = calculateDays(trip.startDate, trip.endDate)
 
           return (
             <div
               key={trip.id}
-              className="card hover:shadow-lg transition-shadow duration-200 cursor-pointer group"
+              className="card cursor-pointer group active:scale-[0.98]"
               onClick={() => onSelectTrip(trip.id)}
             >
-              <div className="aspect-video bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg mb-4 flex items-center justify-center text-white text-5xl">
+              <div className="aspect-video bg-gradient-to-br from-blue-400 to-purple-500 rounded-xl sm:rounded-2xl mb-3 sm:mb-4 flex items-center justify-center text-white text-4xl sm:text-5xl overflow-hidden">
                 {trip.coverImage ? (
-                  <img src={trip.coverImage} alt={trip.name} className="w-full h-full object-cover rounded-lg" />
+                  <img src={trip.coverImage} alt={trip.name} className="w-full h-full object-cover" />
                 ) : (
                   '🌍'
                 )}
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 <div>
-                  <div className="flex items-start justify-between mb-2">
-                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors">
+                  <div className="flex items-start justify-between mb-1 sm:mb-2 gap-2">
+                    <h3 className="text-base sm:text-xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors line-clamp-1">
                       {trip.name}
                     </h3>
                     {getStatusBadge(trip.status)}
                   </div>
-                  <div className="flex items-center text-gray-600 space-x-2">
-                    <span>📍</span>
-                    <span className="font-medium">{trip.destination}, {trip.country}</span>
+                  <div className="flex items-center text-gray-600 space-x-1 sm:space-x-2">
+                    <span className="text-sm sm:text-base">📍</span>
+                    <span className="font-medium text-sm sm:text-base line-clamp-1">{trip.destination}, {trip.country}</span>
                   </div>
                 </div>
 
-                <div className="space-y-2 text-sm">
+                <div className="space-y-1 sm:space-y-2 text-xs sm:text-sm">
                   <div className="flex items-center text-gray-600">
-                    <span className="mr-2">📅</span>
-                    <span>{formatDate(trip.startDate)} - {formatDate(trip.endDate)}</span>
+                    <span className="mr-1 sm:mr-2">📅</span>
+                    <span className="line-clamp-1">{formatDate(trip.startDate)} - {formatDate(trip.endDate)}</span>
                   </div>
                   <div className="flex items-center text-gray-600">
-                    <span className="mr-2">⏱️</span>
+                    <span className="mr-1 sm:mr-2">⏱️</span>
                     <span>{days} วัน {days - 1} คืน</span>
                   </div>
                   <div className="flex items-center text-gray-600">
-                    <span className="mr-2">💰</span>
+                    <span className="mr-1 sm:mr-2">💰</span>
                     <span className="font-semibold">{formatCurrency(trip.budget, trip.currency)}</span>
                   </div>
                 </div>
 
                 {trip.notes && (
-                  <p className="text-sm text-gray-600 line-clamp-2">
+                  <p className="text-xs sm:text-sm text-gray-600 line-clamp-2">
                     {trip.notes}
                   </p>
                 )}
 
-                <div className="pt-4 border-t border-gray-200 flex gap-2">
+                <div className="pt-3 sm:pt-4 border-t border-gray-200/50 flex gap-1.5 sm:gap-2">
                   <button
                     onClick={(e) => {
                       e.stopPropagation()
                       onEditTrip(trip)
                     }}
-                    className="flex-1 btn-secondary text-sm py-1.5"
+                    className="flex-1 btn-secondary text-xs sm:text-sm py-2 sm:py-2.5 px-3 sm:px-6"
                   >
-                    ✏️ แก้ไข
+                    <span className="inline sm:hidden">✏️</span>
+                    <span className="hidden sm:inline">✏️ แก้ไข</span>
                   </button>
                   <button
                     onClick={(e) => {
                       e.stopPropagation()
                       onDeleteTrip(trip.id)
                     }}
-                    className="btn-danger"
+                    className="btn-danger px-3 sm:px-4 text-base sm:text-sm"
                   >
                     🗑️
                   </button>

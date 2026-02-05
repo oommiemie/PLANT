@@ -59,58 +59,61 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-      <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="text-3xl">✈️</div>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">Travel Planner Pro</h1>
-                <p className="text-sm text-gray-600">วางแผนการเที่ยวต่างประเทศอย่างมืออาชีพ</p>
+    <div className="min-h-screen">
+      <header className="sticky top-0 z-50 backdrop-blur-2xl bg-white/70 shadow-lg border-b border-white/20">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-6">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center space-x-2 sm:space-x-4 flex-1 min-w-0">
+              <div className="text-2xl sm:text-4xl float animate-float flex-shrink-0">✈️</div>
+              <div className="min-w-0">
+                <h1 className="text-lg sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent truncate">
+                  Travel Planner Pro
+                </h1>
+                <p className="text-xs sm:text-sm text-gray-600 font-medium hidden xs:block">วางแผนการเที่ยวต่างประเทศอย่างมืออาชีพ</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
               {!showTripForm && !currentTrip && (
-                <button
-                  onClick={() => {
-                    setEditingTrip(null)
-                    setShowTripForm(true)
-                  }}
-                  className="btn-primary flex items-center space-x-2"
-                >
-                  <span>➕</span>
-                  <span>สร้างทริปใหม่</span>
-                </button>
+                <>
+                  <button
+                    onClick={() => {
+                      setEditingTrip(null)
+                      setShowTripForm(true)
+                    }}
+                    className="btn-primary flex items-center space-x-1 sm:space-x-2 text-sm sm:text-base px-3 sm:px-6 py-2 sm:py-3"
+                  >
+                    <span className="text-lg sm:text-xl">➕</span>
+                    <span className="hidden sm:inline">สร้างทริปใหม่</span>
+                    <span className="inline sm:hidden">ทริป</span>
+                  </button>
+                  <button
+                    onClick={() => setShowSettings(true)}
+                    className="btn-secondary flex items-center space-x-1 sm:space-x-2 text-sm sm:text-base px-3 sm:px-6 py-2 sm:py-3"
+                    title="ตั้งค่า"
+                  >
+                    <span className="text-lg sm:text-xl">⚙️</span>
+                    <span className="hidden lg:inline">ตั้งค่า</span>
+                  </button>
+                </>
               )}
 
-              {!showTripForm && !currentTrip && (
+              {currentTrip && (
                 <button
-                  onClick={() => setShowSettings(true)}
-                  className="btn-secondary flex items-center space-x-2"
-                  title="ตั้งค่า"
+                  onClick={() => setCurrentTripId(null)}
+                  className="btn-secondary flex items-center space-x-1 sm:space-x-2 text-sm sm:text-base px-3 sm:px-6 py-2 sm:py-3"
                 >
-                  <span>⚙️</span>
-                  <span className="hidden sm:inline">ตั้งค่า</span>
+                  <span className="text-lg sm:text-xl">←</span>
+                  <span className="hidden sm:inline">กลับไปรายการทริป</span>
+                  <span className="inline sm:hidden">กลับ</span>
                 </button>
               )}
             </div>
-
-            {currentTrip && (
-              <button
-                onClick={() => setCurrentTripId(null)}
-                className="btn-secondary flex items-center space-x-2"
-              >
-                <span>←</span>
-                <span>กลับไปรายการทริป</span>
-              </button>
-            )}
           </div>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 pb-20 sm:pb-8">
         {showTripForm ? (
           <TripForm
             trip={editingTrip}

@@ -4,48 +4,164 @@
 
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900;
+    @apply bg-gradient-to-br from-blue-50 via-cyan-50 to-indigo-50 text-gray-900;
+    min-height: 100vh;
+    background-attachment: fixed;
+  }
+
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Better touch scrolling on iOS */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Prevent text size adjustment on iOS */
+  html {
+    -webkit-text-size-adjust: 100%;
   }
 }
 
 @layer components {
+  /* Glassmorphism Card */
+  .card {
+    @apply rounded-2xl p-6 backdrop-blur-xl bg-white/70 shadow-xl border border-white/20;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.08),
+      0 0 0 1px rgba(255, 255, 255, 0.5) inset,
+      0 1px 0 rgba(255, 255, 255, 0.8) inset;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card:hover {
+    @apply bg-white/80 shadow-2xl scale-[1.02];
+    box-shadow:
+      0 12px 48px rgba(0, 0, 0, 0.12),
+      0 0 0 1px rgba(255, 255, 255, 0.6) inset,
+      0 1px 0 rgba(255, 255, 255, 0.9) inset;
+  }
+
+  /* Buttons with Glass Effect */
   .btn-primary {
-    @apply bg-primary-600 hover:bg-primary-700 text-white font-medium px-4 py-2 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply relative overflow-hidden font-semibold rounded-2xl text-white;
+    @apply transition-all duration-300 transform active:scale-95;
+    /* Minimum touch target size 44x44px (iOS guideline) */
+    min-height: 44px;
+    touch-action: manipulation;
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    box-shadow:
+      0 8px 24px rgba(14, 165, 233, 0.3),
+      0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+  }
+
+  @media (hover: hover) {
+    .btn-primary:hover {
+      @apply scale-105;
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      box-shadow:
+        0 12px 32px rgba(14, 165, 233, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+    }
+  }
+
+  .btn-primary:disabled {
+    @apply opacity-50 cursor-not-allowed transform-none;
   }
 
   .btn-secondary {
-    @apply bg-white hover:bg-gray-50 text-gray-700 font-medium px-4 py-2 rounded-lg border border-gray-300 transition-colors duration-200;
+    @apply font-semibold rounded-2xl backdrop-blur-md;
+    @apply transition-all duration-300 transform active:scale-95;
+    @apply bg-white/60 text-gray-700 border border-white/30;
+    min-height: 44px;
+    touch-action: manipulation;
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.06),
+      0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+  }
+
+  @media (hover: hover) {
+    .btn-secondary:hover {
+      @apply bg-white/80 border-white/50 scale-105;
+      box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(255, 255, 255, 0.7) inset;
+    }
   }
 
   .btn-danger {
-    @apply bg-red-600 hover:bg-red-700 text-white font-medium px-3 py-1.5 rounded-lg transition-colors duration-200 text-sm;
+    @apply font-semibold px-4 py-2 rounded-xl text-white text-sm;
+    @apply transition-all duration-300 transform active:scale-95;
+    min-height: 40px;
+    touch-action: manipulation;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    box-shadow:
+      0 6px 20px rgba(239, 68, 68, 0.3),
+      0 0 0 1px rgba(255, 255, 255, 0.2) inset;
   }
 
+  @media (hover: hover) {
+    .btn-danger:hover {
+      @apply scale-105;
+      background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    }
+  }
+
+  /* Glass Input Fields */
   .input-field {
-    @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+    @apply w-full px-4 py-3 rounded-2xl backdrop-blur-md;
+    @apply bg-white/60 border border-white/30;
+    @apply focus:outline-none focus:bg-white/80 focus:border-primary-300;
+    @apply transition-all duration-300;
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.04),
+      0 0 0 1px rgba(255, 255, 255, 0.5) inset;
   }
 
-  .card {
-    @apply bg-white rounded-xl shadow-sm border border-gray-200 p-6;
+  .input-field:focus {
+    @apply ring-4 ring-primary-100/50;
+    box-shadow:
+      0 8px 24px rgba(14, 165, 233, 0.1),
+      0 0 0 1px rgba(14, 165, 233, 0.2) inset;
   }
 
+  /* Glass Badges */
   .badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+    @apply backdrop-blur-md border;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   }
 
   .badge-planning {
-    @apply bg-yellow-100 text-yellow-800;
+    @apply bg-amber-100/70 text-amber-700 border-amber-200/50;
   }
 
   .badge-booked {
-    @apply bg-blue-100 text-blue-800;
+    @apply bg-blue-100/70 text-blue-700 border-blue-200/50;
   }
 
   .badge-ongoing {
-    @apply bg-green-100 text-green-800;
+    @apply bg-emerald-100/70 text-emerald-700 border-emerald-200/50;
   }
 
   .badge-completed {
-    @apply bg-gray-100 text-gray-800;
+    @apply bg-gray-100/70 text-gray-700 border-gray-200/50;
+  }
+
+  /* Floating Animation */
+  .float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  /* Glass Modal/Settings */
+  .glass-modal {
+    @apply backdrop-blur-2xl bg-white/80;
+    @apply rounded-3xl shadow-2xl border border-white/30;
+    box-shadow:
+      0 24px 64px rgba(0, 0, 0, 0.15),
+      0 0 0 1px rgba(255, 255, 255, 0.6) inset;
   }
 }
