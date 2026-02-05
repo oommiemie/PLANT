@@ -34,6 +34,7 @@ export interface Activity {
   bookingRequired?: boolean
   bookingUrl?: string
   completed?: boolean
+  images?: string[]
 }
 
 export interface Expense {
