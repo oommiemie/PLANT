@@ -52,9 +52,9 @@ export default function TripList({ trips, onSelectTrip, onEditTrip, onDeleteTrip
 
   return (
     <div>
-      <div className="mb-4 sm:mb-6">
+      <div className="mb-4 sm:mb-6 backdrop-blur-md bg-white/60 rounded-2xl p-4 sm:p-6 border border-white/40 shadow-lg">
         <h2 className="text-xl sm:text-2xl font-bold text-gray-900">ทริปท่องเที่ยวของคุณ</h2>
-        <p className="text-sm sm:text-base text-gray-600 mt-1">มีทั้งหมด {trips.length} ทริป</p>
+        <p className="text-sm sm:text-base text-gray-700 mt-1">มีทั้งหมด {trips.length} ทริป</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
