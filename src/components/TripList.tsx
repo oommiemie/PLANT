@@ -27,21 +27,24 @@ export default function TripList({ trips, onSelectTrip, onEditTrip, onDeleteTrip
 
   if (trips.length === 0) {
     return (
-      <div className="card text-center py-20 sm:py-32">
-        <div className="mb-8 relative inline-block">
-          <div className="text-8xl sm:text-9xl mb-4 animate-float">🗺️</div>
-          <div className="absolute -inset-4 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full blur-2xl opacity-20 animate-pulse"></div>
+      <div className="card layer-3d text-center py-20 sm:py-32">
+        <div className="mb-8 relative inline-block perspective-container">
+          <div className="text-8xl sm:text-9xl mb-4 icon-float-3d">🗺️</div>
+          <div className="absolute -inset-8 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+          <div className="absolute -inset-4 bg-gradient-to-r from-purple-300 to-pink-300 rounded-full blur-xl opacity-20"></div>
         </div>
-        <h3 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent mb-3">
+        <h3 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent mb-3 text-3d">
           ยังไม่มีทริปท่องเที่ยว
         </h3>
         <p className="text-base sm:text-lg text-gray-600 font-medium mb-8 max-w-md mx-auto">
           เริ่มต้นวางแผนการเดินทางสุดพิเศษของคุณกันเถอะ! ✨
         </p>
-        <div className="flex gap-2 justify-center text-4xl sm:text-5xl opacity-40">
-          <span className="animate-bounce" style={{ animationDelay: '0s' }}>✈️</span>
-          <span className="animate-bounce" style={{ animationDelay: '0.1s' }}>🌍</span>
-          <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>🏖️</span>
+        <div className="flex gap-4 justify-center text-4xl sm:text-5xl">
+          <span className="icon-3d icon-float-3d" style={{ animationDelay: '0s' }}>✈️</span>
+          <span className="icon-3d icon-float-3d" style={{ animationDelay: '0.2s' }}>🌍</span>
+          <span className="icon-3d icon-float-3d" style={{ animationDelay: '0.4s' }}>🏖️</span>
+          <span className="icon-3d icon-float-3d" style={{ animationDelay: '0.6s' }}>🎒</span>
+          <span className="icon-3d icon-float-3d" style={{ animationDelay: '0.8s' }}>📸</span>
         </div>
       </div>
     )
@@ -61,15 +64,16 @@ export default function TripList({ trips, onSelectTrip, onEditTrip, onDeleteTrip
           return (
             <div
               key={trip.id}
-              className="card cursor-pointer group active:scale-[0.98]"
+              className="card layer-3d cursor-pointer group active:scale-[0.98]"
               onClick={() => onSelectTrip(trip.id)}
             >
-              <div className="aspect-video bg-gradient-to-br from-blue-400 to-purple-500 rounded-xl sm:rounded-2xl mb-3 sm:mb-4 flex items-center justify-center text-white text-4xl sm:text-5xl overflow-hidden">
+              <div className="aspect-video bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 rounded-xl sm:rounded-2xl mb-3 sm:mb-4 flex items-center justify-center text-white text-4xl sm:text-5xl overflow-hidden relative">
                 {trip.coverImage ? (
                   <img src={trip.coverImage} alt={trip.name} className="w-full h-full object-cover" />
                 ) : (
-                  '🌍'
+                  <div className="icon-3d text-6xl sm:text-7xl">🌍</div>
                 )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
               </div>
 
               <div className="space-y-2 sm:space-y-3">

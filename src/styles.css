@@ -22,8 +22,45 @@
       radial-gradient(circle at 80% 80%, rgba(86, 204, 242, 0.3), transparent 50%),
       radial-gradient(circle at 40% 20%, rgba(167, 139, 250, 0.3), transparent 50%),
       linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-    animation: gradient 15s ease infinite;
+    animation: gradient 15s ease infinite, parallax-bg 20s ease-in-out infinite;
     z-index: -1;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    right: -50%;
+    bottom: -50%;
+    background:
+      radial-gradient(circle at 60% 30%, rgba(255, 255, 255, 0.1), transparent 40%),
+      radial-gradient(circle at 30% 70%, rgba(167, 139, 250, 0.15), transparent 40%),
+      radial-gradient(circle at 70% 60%, rgba(102, 126, 234, 0.1), transparent 40%);
+    animation: parallax-float 25s ease-in-out infinite;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  @keyframes parallax-bg {
+    0%, 100% {
+      transform: translateY(0) scale(1);
+    }
+    50% {
+      transform: translateY(-20px) scale(1.05);
+    }
+  }
+
+  @keyframes parallax-float {
+    0%, 100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    33% {
+      transform: translate(30px, -30px) rotate(5deg);
+    }
+    66% {
+      transform: translate(-30px, 30px) rotate(-5deg);
+    }
   }
 
   @keyframes gradient {
@@ -60,6 +97,8 @@
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+    transform-style: preserve-3d;
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
   }
 
   .card::before {
@@ -84,12 +123,13 @@
 
   .card:hover {
     @apply bg-white/90 shadow-2xl;
-    transform: translateY(-4px) scale(1.01);
+    transform: perspective(1000px) translateY(-8px) translateZ(30px) rotateX(2deg) scale(1.02);
     box-shadow:
-      0 20px 60px rgba(0, 0, 0, 0.15),
+      0 30px 80px rgba(0, 0, 0, 0.2),
       0 0 0 1px rgba(255, 255, 255, 0.7) inset,
       0 2px 0 rgba(255, 255, 255, 1) inset,
-      0 30px 90px rgba(102, 126, 234, 0.25);
+      0 40px 120px rgba(102, 126, 234, 0.3),
+      0 0 60px rgba(167, 139, 250, 0.2);
   }
 
   /* Buttons with Glass Effect */
@@ -101,8 +141,11 @@
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     box-shadow:
       0 10px 30px rgba(102, 126, 234, 0.4),
+      0 6px 10px rgba(102, 126, 234, 0.2),
       0 0 0 1px rgba(255, 255, 255, 0.3) inset,
       0 1px 0 rgba(255, 255, 255, 0.5) inset;
+    transform-style: preserve-3d;
+    transform: perspective(500px) translateZ(0);
   }
 
   .btn-primary::before {
@@ -127,12 +170,14 @@
 
   @media (hover: hover) {
     .btn-primary:hover {
-      @apply scale-105;
+      transform: perspective(500px) translateZ(10px) translateY(-2px) scale(1.05);
       background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
       box-shadow:
-        0 15px 40px rgba(102, 126, 234, 0.5),
+        0 20px 50px rgba(102, 126, 234, 0.5),
+        0 10px 20px rgba(102, 126, 234, 0.3),
         0 0 0 1px rgba(255, 255, 255, 0.4) inset,
-        0 1px 0 rgba(255, 255, 255, 0.6) inset;
+        0 1px 0 rgba(255, 255, 255, 0.6) inset,
+        0 0 30px rgba(167, 139, 250, 0.3);
     }
   }
 
@@ -150,8 +195,11 @@
     overflow: hidden;
     box-shadow:
       0 6px 20px rgba(0, 0, 0, 0.08),
+      0 3px 8px rgba(0, 0, 0, 0.04),
       0 0 0 1px rgba(255, 255, 255, 0.6) inset,
       0 1px 0 rgba(255, 255, 255, 0.8) inset;
+    transform-style: preserve-3d;
+    transform: perspective(500px) translateZ(0);
   }
 
   .btn-secondary::before {
@@ -176,9 +224,11 @@
 
   @media (hover: hover) {
     .btn-secondary:hover {
-      @apply bg-white/90 border-white/60 scale-105;
+      @apply bg-white/90 border-white/60;
+      transform: perspective(500px) translateZ(8px) translateY(-2px) scale(1.05);
       box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.12),
+        0 15px 40px rgba(0, 0, 0, 0.15),
+        0 8px 15px rgba(0, 0, 0, 0.08),
         0 0 0 1px rgba(255, 255, 255, 0.8) inset,
         0 1px 0 rgba(255, 255, 255, 1) inset;
     }
@@ -210,16 +260,21 @@
     @apply transition-all duration-300 font-medium;
     box-shadow:
       0 4px 16px rgba(0, 0, 0, 0.06),
+      0 2px 6px rgba(0, 0, 0, 0.03),
       0 0 0 1px rgba(255, 255, 255, 0.6) inset,
       0 1px 0 rgba(255, 255, 255, 0.8) inset;
+    transform-style: preserve-3d;
   }
 
   .input-field:focus {
     @apply ring-4 border-purple-300/50;
+    transform: perspective(500px) translateZ(5px);
     box-shadow:
-      0 10px 30px rgba(102, 126, 234, 0.15),
+      0 15px 40px rgba(102, 126, 234, 0.2),
+      0 6px 15px rgba(102, 126, 234, 0.1),
       0 0 0 1px rgba(102, 126, 234, 0.3) inset,
-      0 1px 0 rgba(255, 255, 255, 0.9) inset;
+      0 1px 0 rgba(255, 255, 255, 0.9) inset,
+      0 0 20px rgba(167, 139, 250, 0.15);
     ring-color: rgba(102, 126, 234, 0.2);
   }
 
@@ -231,7 +286,11 @@
   .badge {
     @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
     @apply backdrop-blur-md border;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.08),
+      0 1px 3px rgba(0, 0, 0, 0.06),
+      0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    transform-style: preserve-3d;
   }
 
   .badge-planning {
@@ -255,14 +314,45 @@
     animation: float 6s ease-in-out infinite;
   }
 
+  /* 3D Floating Animation */
+  @keyframes float-3d {
+    0%, 100% {
+      transform: translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg);
+    }
+    25% {
+      transform: translateY(-10px) translateZ(20px) rotateX(5deg) rotateY(-5deg);
+    }
+    50% {
+      transform: translateY(-20px) translateZ(40px) rotateX(-5deg) rotateY(5deg);
+    }
+    75% {
+      transform: translateY(-10px) translateZ(20px) rotateX(5deg) rotateY(-5deg);
+    }
+  }
+
+  .float-3d {
+    animation: float-3d 8s ease-in-out infinite;
+    transform-style: preserve-3d;
+  }
+
+  /* 3D Perspective Container */
+  .perspective-container {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+  }
+
   /* Glass Modal/Settings */
   .glass-modal {
     @apply backdrop-blur-2xl bg-white/85;
     @apply rounded-3xl shadow-2xl border border-white/40;
     box-shadow:
-      0 30px 80px rgba(0, 0, 0, 0.2),
+      0 40px 100px rgba(0, 0, 0, 0.25),
+      0 20px 40px rgba(0, 0, 0, 0.15),
       0 0 0 1px rgba(255, 255, 255, 0.7) inset,
-      0 2px 0 rgba(255, 255, 255, 0.9) inset;
+      0 2px 0 rgba(255, 255, 255, 0.9) inset,
+      0 0 80px rgba(102, 126, 234, 0.2);
+    transform-style: preserve-3d;
+    transform: perspective(1000px) translateZ(50px);
   }
 
   /* Shimmer Effect for Cards */
@@ -298,5 +388,82 @@
     @apply bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent;
     animation: gradient 3s ease infinite;
     background-size: 200% auto;
+  }
+
+  /* 3D Icon Styles */
+  .icon-3d {
+    display: inline-block;
+    transform-style: preserve-3d;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2))
+            drop-shadow(0 6px 6px rgba(0, 0, 0, 0.15));
+    transition: transform 0.3s ease;
+  }
+
+  .icon-3d:hover {
+    transform: translateZ(20px) rotateY(10deg) scale(1.1);
+  }
+
+  /* 3D Floating Icons */
+  @keyframes icon-float-3d {
+    0%, 100% {
+      transform: translateY(0) translateZ(0) rotateZ(0deg);
+      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+    }
+    50% {
+      transform: translateY(-15px) translateZ(10px) rotateZ(5deg);
+      filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.3));
+    }
+  }
+
+  .icon-float-3d {
+    animation: icon-float-3d 6s ease-in-out infinite;
+  }
+
+  /* 3D Text Shadow */
+  .text-3d {
+    text-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.5),
+      0 2px 0 rgba(0, 0, 0, 0.05),
+      0 3px 0 rgba(0, 0, 0, 0.04),
+      0 4px 0 rgba(0, 0, 0, 0.03),
+      0 5px 0 rgba(0, 0, 0, 0.02),
+      0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Isometric Card Effect */
+  .card-isometric {
+    transform: perspective(1000px) rotateX(10deg) rotateY(-10deg);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-isometric:hover {
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(50px);
+  }
+
+  /* Layered 3D Effect */
+  .layer-3d {
+    position: relative;
+  }
+
+  .layer-3d::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(167, 139, 250, 0.3));
+    border-radius: inherit;
+    z-index: -1;
+    filter: blur(10px);
+    transform: translateZ(-10px);
+  }
+
+  .layer-3d::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(167, 139, 250, 0.2));
+    border-radius: inherit;
+    z-index: -2;
+    filter: blur(20px);
+    transform: translateZ(-20px);
   }
 }

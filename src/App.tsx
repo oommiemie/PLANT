@@ -64,12 +64,12 @@ function App() {
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-6">
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center space-x-2 sm:space-x-4 flex-1 min-w-0">
-              <div className="text-2xl sm:text-4xl float animate-float flex-shrink-0">✈️</div>
+              <div className="text-2xl sm:text-4xl icon-3d icon-float-3d flex-shrink-0">✈️</div>
               <div className="min-w-0">
-                <h1 className="text-lg sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent truncate">
+                <h1 className="text-lg sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-primary-600 via-purple-600 to-primary-400 bg-clip-text text-transparent truncate text-3d">
                   Travel Planner Pro
                 </h1>
-                <p className="text-xs sm:text-sm text-gray-600 font-medium hidden xs:block">วางแผนการเที่ยวต่างประเทศอย่างมืออาชีพ</p>
+                <p className="text-xs sm:text-sm text-gray-600 font-medium hidden xs:block">วางแผนการเที่ยวต่างประเทศอย่างมืออาชีพ ✨</p>
               </div>
             </div>
 
