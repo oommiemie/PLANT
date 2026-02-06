@@ -5,6 +5,7 @@ import ItineraryPlanner from './ItineraryPlanner'
 import BudgetTracker from './BudgetTracker'
 import DocumentManager from './DocumentManager'
 import PackingList from './PackingList'
+import WeatherForecast from './WeatherForecast'
 
 interface TripDetailProps {
   trip: Trip
@@ -20,7 +21,7 @@ interface TripDetailProps {
   onDeleteTrip: (tripId: string) => void
 }
 
-type Tab = 'itinerary' | 'budget' | 'documents' | 'packing'
+type Tab = 'itinerary' | 'budget' | 'documents' | 'packing' | 'weather'
 
 export default function TripDetail({
   trip,
@@ -44,6 +45,7 @@ export default function TripDetail({
 
   const tabs = [
     { id: 'itinerary' as Tab, label: '📅 แผนรายวัน', icon: '📅' },
+    { id: 'weather' as Tab, label: '🌤️ สภาพอากาศ', icon: '🌤️' },
     { id: 'budget' as Tab, label: '💰 งบประมาณ', icon: '💰' },
     { id: 'documents' as Tab, label: '📄 เอกสาร', icon: '📄' },
     { id: 'packing' as Tab, label: '🎒 สัมภาระ', icon: '🎒' },
@@ -142,6 +144,9 @@ export default function TripDetail({
             dayPlans={dayPlans}
             onUpdateDayPlans={onUpdateDayPlans}
           />
+        )}
+        {activeTab === 'weather' && (
+          <WeatherForecast trip={trip} />
         )}
         {activeTab === 'budget' && (
           <BudgetTracker

@@ -67,6 +67,28 @@ export interface PackingItem {
   packed: boolean
 }
 
+export interface WeatherData {
+  date: string
+  tempMax: number
+  tempMin: number
+  precipitation: number
+  weatherCode: number
+  weatherDescription: string
+  weatherIcon: string
+}
+
+export interface ClothingRecommendation {
+  icon: string
+  item: string
+  reason: string
+}
+
+export interface WeatherAlert {
+  type: 'rain' | 'storm' | 'cold' | 'hot' | 'snow'
+  message: string
+  icon: string
+}
+
 export interface AppState {
   trips: Trip[]
   dayPlans: DayPlan[]
